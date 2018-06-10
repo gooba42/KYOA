@@ -11,8 +11,9 @@ class gameDie:
 
     def __call__(self):
         "Called without argument will just roll a single die"
-        result = random.randint(1, self.variety)
-        return result
+     #   result = random.randint(1, self.variety)
+     #   return result
+        return self.roll()
 
     def roll(self):
         "Roll a single die of the previously defined type"
@@ -24,7 +25,7 @@ class gameDie:
         "Roll multiple dice with a multiplier"
         total = 0
         for item in range(multiplier):
-            total += random.randint(1, self.variety)
+            total += self.roll()
         # end for
         total += modifier
         return total
@@ -38,7 +39,7 @@ class gameDie:
         total = 0
         rolls = []
         for item in range(0, multiplier):
-            roll = random.randint(1, self.variety)
+            roll = self.roll()
             print("Rolled:" + str(roll))
             rolls.append(roll)
         # added all the rolls to the pool, now we sort
@@ -50,7 +51,7 @@ class gameDie:
         print("Reversed:" + str(rolls))
         for item in range(drop):
             rolls.pop()
-        print ("After Drop:" + str(rolls))
+        print("After Drop:" + str(rolls))
         for item in rolls:
             total += item
         return total

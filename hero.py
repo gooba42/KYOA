@@ -3,26 +3,42 @@ class hero:
         self.name = name
         self.best = best
         self.middling = middling
-        self.worse = worst
+        self.worst = worst
+        self.bestDie = 0
+        self.mDie = 0
+        self.wDie = 0
         self.level = level
-        if(level==1):
-            bestDie = 10
-            mDie = 8
-            wDie = 6
-        elif(level==2):
-            bestDie = 12
-            mDie = 10
-            wDie = 6
-        elif(level==3):
-            bestDie = 20
-            mDie = 12
-            wDie = 8
-        else:
-            bestDie = 8
-            mDie = 6
-            wDie = 4
+        self.bestDie, self.mDie, self.wDie = self.levelChange(level)
         self.skills = {
-                best:bestDie,
-                middling:mDie,
-                worst:wDie
-                }
+            self.best: self.bestDie,
+            self.middling: self.mDie,
+            self.worst: self.wDie
+        }
+
+    def __call__(self):
+        stats = [
+            self.name,
+            self.skills
+        ]
+        return stats
+
+    def levelChange(self,newLevel):
+        self.level = newLevel
+        if(newLevel == 1):
+            self.bestDie = 10
+            self.mDie = 8
+            self.wDie = 6
+        elif(newLevel == 2):
+            self.bestDie = 12
+            self.mDie = 10
+            self.wDie = 6
+        elif(newLevel == 3):
+            self.bestDie = 20
+            self.mDie = 12
+            self.wDie = 8
+        else:
+            self.bestDie = 8
+            self.mDie = 6
+            self.wDie = 4
+        return
+
