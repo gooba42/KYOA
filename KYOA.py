@@ -1,42 +1,24 @@
-#!/usr/bin/python
-import rpgdice
+#!/usr/bin/python3
+from hero import hero
+from random import shuffle
 import re
 
+heroName = input("What is your hero's name? ") or "Bozo"
+heroBest = input("What is your hero's best skill? ") or "Clowning"
+heroMid = input("What is your hero's second best skill? ") or "Juggling"
+heroWorst = input("What is your hero's worst skill? ") or "Tax Accounting"
+heroLevel = 0
+myHero = hero(heroName, heroBest, heroMid, heroWorst, heroLevel)
+conflict = {'description': 'An old man demand you perform ' + myHero.best+"."}
 
-def main():
-    middling = rpgdice.gameDie(4)
-    secondary = rpgdice.gameDie(6)
-    great = rpgdice.gameDie(8)
-
-    hero = {'name': 'Bozo',
-            'description': 'He is Bozo',
-            'Best Skill': 'Clowning',
-            'Secondary Skill': 'Juggling',
-            'Middling Skill': 'Tax accounting'}
-    world = {'name': 'Earth'}
-    print(hero)
-
-    hero['name'] = raw_input("What is your hero's name? ")
-    hero['Best Skill'] = raw_input("What is your hero's best skill? ")
-    hero['Secondary Skill'] = raw_input(
-        "What is your hero's second best skill? ")
-    hero['Middling Skill'] = raw_input("What is your hero not so great at? ")
-    hero['description'] = raw_input("Describe your hero some: ")
-
-    conflict = {'description': 'An old man demands you perform ' +
-                hero['Best Skill'] + "."}
-
-    print(conflict['description'])
-    perform = raw_input("Will you do it? (Y or N) ")
-    if re.match("[Yy]", perform):
-        roll = great.roll()
-        if roll > 2:
-            print(hero['name'] + " did it!")
-        else:
-            print("You rolled a " + str(roll) + " and " +
-                  hero['name'] + "had a problem...")
+print(conflict['description'])
+perform = input("Will you do it? (Y or N) ")
+if re.match("[Yy]", perform):
+    roll = myHero.skills[myHero.best]()
+    if(roll > 2):
+        print(myHero.name+" did it!")
     else:
-        print("Oh fartnuggets!")
-
-
-main()
+        print(myHero.name+" rolled a " + str(roll) + " and had a problem.")
+else:
+    print("Oh fartnuggets!")
+#print(myHero())
