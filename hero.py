@@ -1,4 +1,7 @@
+#!/usr/bin/python3
 from rpgdice import gameDie
+
+
 class hero:
     """This creates a hero suitable for a kid fantasy game.
     They have 3 skills: Best, Second Best and Worst
@@ -31,34 +34,30 @@ class hero:
         self.level = newLevel
         if(self.level == 0):
             # Regular Person Stats
-            self.wDie = gameDie(4)
-            self.mDie = gameDie(6)
-            self.bestDie = gameDie(8)
+            self.setDice(8, 6, 4)
 
         elif(self.level == 1):
             # Skilled Person Stats
-            self.wDie = gameDie(6)
-            self.mDie = gameDie(8)
-            self.bestDie = gameDie(10)
+            self.setDice(10, 8, 6)
 
         elif(self.level == 2):
             # Amazing person stats
-            self.wDie = gameDie(8)
-            self.mDie = gameDie(10)
-            self.bestDie = gameDie(12)
+            self.setDice(12, 10, 8)
 
         elif(self.level == 3):
             # Superhuman stats
-            self.wDie = gameDie(10)
-            self.mDie = gameDie(12)
-            self.bestDie = gameDie(20)
+            self.setDice(20, 12, 10)
 
         else:
             # If all else fails,default to minimal but legal stats
-            self.wDie = gameDie(1)
-            self.mDie = gameDie(1)
-            self.bestDie = gameDie(1)
+            self.setDice(1, 1, 1)
         self.updateSkills()
+
+    def setDice(self, high, mid, low):
+        """Set the dice from high to low"""
+        self.bestDie = gameDie(high)
+        self.mDie = gameDie(mid)
+        self.wDie = gameDie(low)
 
     def updateSkills(self):
         """We update the skills block for accurate reporting with the

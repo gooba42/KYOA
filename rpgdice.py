@@ -11,8 +11,6 @@ class gameDie:
 
     def __call__(self):
         "Called without argument will just roll a single die"
-     #   result = random.randint(1, self.variety)
-     #   return result
         return self.roll()
 
     def roll(self):
