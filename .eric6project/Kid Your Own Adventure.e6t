@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Tasks SYSTEM "Tasks-6.0.dtd">
+<!-- eric6 tasks file for project Kid Your Own Adventure -->
+<!-- Saved: 2019-03-25, 07:34:39 -->
+<Tasks version="6.0">
+  <ProjectScanFilter></ProjectScanFilter>
+  <Task priority="1" completed="False" type="1" uid="{822f3e1b-5d62-4fb3-9054-4fefaeca3ad3}">
+    <Summary>TODO: Poop</Summary>
+    <Description></Description>
+    <Created>2019-03-25, 07:34:22</Created>
+    <Resource>
+      <Filename>KYOA.py</Filename>
+      <Linenumber>5</Linenumber>
+    </Resource>
+  </Task>
+</Tasks>
