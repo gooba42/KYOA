@@ -21,9 +21,9 @@ class challenge:
 
     def accepted(self, roll):
         if(roll > 2):
-            self.success()
+            return self.success()
         else:
-            self.failure()
+            return self.failure()
 
     def declined(self):
         return self.description["Declined"]

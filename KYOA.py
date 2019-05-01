@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import re
 from random import choice
-
 from hero import hero
+from challenge import challenge
 
 heroName = input("What is your hero's name? ") or "Bozo"
 heroBest = input("What is your hero's best skill? ") or "Clowning"
@@ -11,21 +11,17 @@ heroWorst = input("What is your hero's worst skill? ") or "Tax Accounting"
 heroLevel = 0
 myHero = hero(heroName, heroBest, heroMid, heroWorst, heroLevel)
 while True:
-    challenge = choice([myHero.best, myHero.middling, myHero.worst])
-    conflict = {
-        'description': 'An old man demands you perform ' + challenge + "."}
+    issue = choice([myHero.best, myHero.middling, myHero.worst])
+    conflict = {'Description':'An old man demands you perform ' + issue + "."}
+    test = challenge(1,issue,conflict)
+    test.description['Success'] = "You've pulled it off and succeeded at "+issue+"!"
+    test.description['Failure'] = "You've failed at "+issue+"."
+    test.description['Declined'] = "Oh fartnuggets!"
 
-    print(conflict['description'])
+    print(test.description['Description'])
     perform = input("Will you do it? (Y or N) ")
     if re.match("[Yy]", perform):
-        roll = myHero.skills[challenge]()
-        if(roll > 2):
-            print(myHero.name + " did it!")
-        else:
-            print(
-                myHero.name +
-                " rolled a " +
-                str(roll) +
-                " and had a problem.")
+        roll = myHero.skills[issue]()
+        print(test.accepted(roll))
     else:
-        print("Oh fartnuggets!")
+        print(test.declined())
