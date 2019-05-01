@@ -12,10 +12,8 @@ heroLevel = 0
 myHero = hero(heroName, heroBest, heroMid, heroWorst, heroLevel)
 while True:
     issue = choice([myHero.best, myHero.middling, myHero.worst])
-    conflict = {'Description':'An old man demands you perform ' + issue + "."}
+    conflict = 'An old man demands you perform ' + issue + "."
     test = challenge(1,issue,conflict)
-    test.description['Success'] = "You've pulled it off and succeeded at "+issue+"!"
-    test.description['Failure'] = "You've failed at "+issue+"."
     test.description['Declined'] = "Oh fartnuggets!"
 
     print(test.description['Description'])
