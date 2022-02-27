@@ -10,6 +10,7 @@ class hero:
     of a higher-than-threshold roll."""
 
     def __init__(self, name, best, middling, worst, level=0):
+        self.skills = None
         self.name = name
         self.best = best
         self.middling = middling
@@ -32,19 +33,19 @@ class hero:
         """This should update the dice according to the new level applied to
         the hero."""
         self.level = newLevel
-        if(self.level == 0):
+        if self.level == 0:
             # Regular Person Stats
             self.setDice(8, 6, 4)
 
-        elif(self.level == 1):
+        elif self.level == 1:
             # Skilled Person Stats
             self.setDice(10, 8, 6)
 
-        elif(self.level == 2):
+        elif self.level == 2:
             # Amazing person stats
             self.setDice(12, 10, 8)
 
-        elif(self.level == 3):
+        elif self.level == 3:
             # Superhuman stats
             self.setDice(20, 12, 10)
 

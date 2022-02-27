@@ -5,11 +5,11 @@
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName = "KYOA";
-var $pyjs = new Object();
+var $pyjs = {};
 $pyjs.global_namespace = this;
 $pyjs.__modules__ = {};
 $pyjs.loaded_modules = {};
-$pyjs.options = new Object();
+$pyjs.options = {};
 $pyjs.options['arg_ignore'] = false;
 $pyjs.options['arg_count'] = false;
 $pyjs.options['arg_is_instance'] = false;
@@ -133,7 +133,7 @@ function $pyjs_kwargs_call(obj, func, star_args, dstar_args, args)
     if (typeof func.__args__ != 'undefined') {
         var __args__ = func.__args__;
     } else {
-        var __args__ = new Array(null, null);
+        var __args__ = [null, null];
     }
 
     var a, aname, _idx , idx, res;
@@ -203,7 +203,7 @@ function $pyjs__exception_func_param(func_name, minargs, maxargs, nargs) {
                 break;
             default:
                 msg = func_name + "() takes exactly " + minargs + " arguments (" + nargs + " given)";
-        };
+        }
     } else if (nargs > maxargs) {
         if (maxargs == 1) {
             msg  = func_name + "() takes at most " + maxargs + " argument (" + nargs + " given)";
@@ -347,7 +347,7 @@ function $pyjs__subclasses__(cls_obj) {
 }
 
 function $pyjs__mro_merge(seqs) {
-    var res = new Array();
+    var res = [];
     var i = 0;
     var cand = null;
     function resolve_error(candidates) {
@@ -355,17 +355,17 @@ function $pyjs__mro_merge(seqs) {
         throw (pyjslib.TypeError("Cannot create a consistent method resolution order (MRO) for bases " + candidates[0].__name__ + ", "+ candidates[1].__name__));
     }
     for (;;) {
-        var nonemptyseqs = new Array();
+        var nonemptyseqs = [];
         for (var j = 0; j < seqs.length; j++) {
             if (seqs[j].length > 0) nonemptyseqs.push(seqs[j]);
         }
         if (nonemptyseqs.length == 0) return res;
         i++;
-        var candidates = new Array();
+        var candidates = [];
         for (var j = 0; j < nonemptyseqs.length; j++) {
             cand = nonemptyseqs[j][0];
             candidates.push(cand);
-            var nothead = new Array();
+            var nothead = [];
             for (var k = 0; k < nonemptyseqs.length; k++) {
                 for (var m = 1; m < nonemptyseqs[k].length; m++) {
                     if (cand == nonemptyseqs[k][m]) {
@@ -418,14 +418,14 @@ function $pyjs__class_function(cls_fn, prop, bases) {
     var class_name = cls_fn.__name__;
     var class_module = cls_fn.__module__;
     cls_fn.__number__ = null;
-    var base_mro_list = new Array();
+    var base_mro_list = [];
     for (var i = 0; i < bases.length; i++) {
         if (bases[i].__mro__ != null) {
-            base_mro_list.push(new Array().concat(bases[i].__mro__));
+            base_mro_list.push([].concat(bases[i].__mro__));
         } else if (typeof bases[i].__class__ == 'function') {
-            base_mro_list.push(new Array().concat([bases[i].__class__]));
+            base_mro_list.push([].concat([bases[i].__class__]));
         } else if (typeof bases[i].prototype == 'function') {
-            base_mro_list.push(new Array().concat([bases[i].prototype]));
+            base_mro_list.push([].concat([bases[i].prototype]));
         }
     }
     var __mro__ = $pyjs__mro_merge(base_mro_list);
@@ -474,12 +474,12 @@ function $pyjs__class_function(cls_fn, prop, bases) {
     cls_fn.__dict__ = cls_fn;
     cls_fn.__is_instance__ = false;
     cls_fn.__super_classes__ = bases;
-    cls_fn.__sub_classes__ = new Array();
+    cls_fn.__sub_classes__ = [];
     for (var i = 0; i < bases.length; i++) {
         if (typeof bases[i].__sub_classes__ == 'array') {
             bases[i].__sub_classes__.push(cls_fn);
         } else {
-            bases[i].__sub_classes__ = new Array();
+            bases[i].__sub_classes__ = [];
             bases[i].__sub_classes__.push(cls_fn);
         }
     }
@@ -491,7 +491,7 @@ function $pyjs__class_function(cls_fn, prop, bases) {
 function $pyjs_type(clsname, bases, methods)
 {
     var cls_instance = $pyjs__class_instance(clsname);
-    var obj = new Object;
+    var obj = {};
     for (var i in methods) {
         if (typeof methods[i] == 'function') {
             obj[i] = $pyjs__instancemethod(cls_instance, i, methods[i], methods[i].__bind_type__, methods[i].__args__);
@@ -950,7 +950,7 @@ $pyjs.loaded_modules['re'] = function (__mod_name__) {
 	re['_compile'].__args__ = [null,null,['pat'],['flags', 0]];
 	re['SRE_Match'] = (function(){
 		var $cls_instance = $pyjs__class_instance('SRE_Match');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '0e922573e88a45482824bfcb36206d30';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(re, string, pos, endpos, groups, start, lastindex, lastgroup) {
@@ -1163,7 +1163,7 @@ $pyjs.loaded_modules['re'] = function (__mod_name__) {
 	})();
 	re['SRE_Pattern'] = (function(){
 		var $cls_instance = $pyjs__class_instance('SRE_Pattern');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '92f849f80db698401aa4d609d45527ac';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(pat, flags, code) {
@@ -1499,7 +1499,7 @@ $pyjs.loaded_modules['rpgdice'] = function (__mod_name__) {
 	rpgdice['random'] = pyjslib['___import___']('random', null);
 	rpgdice['gameDie'] = (function(){
 		var $cls_instance = $pyjs__class_instance('gameDie');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '450cf750337bfc392c80c1dff6815a60';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(variety) {
@@ -1685,7 +1685,7 @@ $pyjs.loaded_modules['_random'] = function (__mod_name__) {
 	_random['one'] = _random['pyjslib']['long'](1);
 	_random['Random'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Random');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'c40e132d9835c25a7d3a030d5578cb40';
 		$cls_definition['seed'] = null;
@@ -1699,7 +1699,7 @@ $pyjs.loaded_modules['_random'] = function (__mod_name__) {
 			var s,mask,rand;
 			s = String('');
 
-        var table = new Array();
+        var table = [];
         for (var i = 0 ; i < k/32; i++) {
             table[i] = (Math.random() * 4294967296).toString(32);
         }
@@ -3006,7 +3006,7 @@ $pyjs.loaded_modules['pyjamas.DOM'] = function (__mod_name__) {
 	pyjamas['DOM']['insertChild'].__args__ = [null,null,['parent'],['toAdd'],['index']];
 	pyjamas['DOM']['IterChildrenClass'] = (function(){
 		var $cls_instance = $pyjs__class_instance('IterChildrenClass');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'ac20b681ce3e37358ce4695bb6b0235a';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(elem) {
@@ -3108,7 +3108,7 @@ $pyjs.loaded_modules['pyjamas.DOM'] = function (__mod_name__) {
 	pyjamas['DOM']['iterChildren'].__args__ = [null,null,['elem']];
 	pyjamas['DOM']['IterWalkChildren'] = (function(){
 		var $cls_instance = $pyjs__class_instance('IterWalkChildren');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'bc5e5c0dda264b4692f63f3512cced97';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(elem) {
@@ -3768,7 +3768,7 @@ $pyjs.loaded_modules['pyjamas.Location'] = function (__mod_name__) {
 	pyjamas['Location']['makeUrlStringFromDict'].__args__ = [null,null,['d']];
 	pyjamas['Location']['Location'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Location');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'f53a36321ede9aaa6aec3365a0ef0a68';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(location) {
@@ -4079,7 +4079,7 @@ $pyjs.loaded_modules['time'] = function (__mod_name__) {
 	time['time'].__args__ = [null,null];
 	time['struct_time'] = (function(){
 		var $cls_instance = $pyjs__class_instance('struct_time');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '9053637c4f7f74009ccec63ba2dde7a8';
 		$cls_definition['n_fields'] = 9;
@@ -4486,7 +4486,7 @@ $pyjs.loaded_modules['pyjslib'] = function (__mod_name__) {
 	if ((__mod_name__ === null) || (typeof __mod_name__ == 'undefined')) __mod_name__ = 'pyjslib';
 	var __name__ = pyjslib.__name__ = __mod_name__;
 	var $add3,$add1,$add2,$add6,$add5,$add4;
-	;
+
 	pyjslib['platform'] = $pyjs.platform;
 	pyjslib['sys'] = null;
 	pyjslib['dynamic'] = null;
@@ -4503,11 +4503,11 @@ $min_int = -0x80000000;
 
 	pyjslib['object'] = (function(){
 		var $cls_instance = $pyjs__class_instance('object');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'fb3bba827fbc7c87b91365e41b48aa7f';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
-		                            new Array());
+		                            []);
 	})();
 	pyjslib['op_is'] = function(a, b) {
 
@@ -5048,7 +5048,7 @@ $min_int = -0x80000000;
             return res;
         }
     }
-;
+
 	throw (pyjslib['TypeError']((typeof ($add1=String('unsupported operand type(s) for \x26: '))==typeof ($add2=String(', ')['join'](function(){
 var $listcomp1 = pyjslib['list']();
 	$iter1_iter = pyjslib['list'](pyjslib.args);
@@ -5124,7 +5124,7 @@ return $listcomp1;}())) && (typeof $add1=='number'||typeof $add1=='string')?
             return res;
         }
     }
-;
+
 	throw (pyjslib['TypeError']((typeof ($add3=String('unsupported operand type(s) for ^: '))==typeof ($add4=String(', ')['join'](function(){
 var $listcomp2 = pyjslib['list']();
 	$iter2_iter = pyjslib.args;
@@ -5200,7 +5200,7 @@ return $listcomp2;}())) && (typeof $add3=='number'||typeof $add3=='string')?
             return res;
         }
     }
-;
+
 	throw (pyjslib['TypeError']((typeof ($add5=String('unsupported operand type(s) for |: '))==typeof ($add6=String(', ')['join'](function(){
 var $listcomp3 = pyjslib['list']();
 	$iter3_iter = pyjslib.args;
@@ -5412,7 +5412,7 @@ $pyjs.track.module = save_track_module;
 	pyjslib['___import___'].__args__ = [null,null,['path'],['context'],['module_name', null],['get_base', true]];
 	pyjslib['__dynamic_load__'] = function(importName) {
 		var $add28,$add30,$or1,err,$or3,$or2,$add21,$add20,$add23,$add22,$add25,$add24,module,$add26,$add29,$pyjs_try_err,$add27,$add19;
-		;
+
 		module = $pyjs.loaded_modules[importName];
 		if (pyjslib['bool']((pyjslib['bool']($or1=(pyjslib['sys'] === null))?$or1:(pyjslib['bool']($or2=(pyjslib['dynamic'] === null))?$or2:pyjslib['__nondynamic_modules__']['has_key'](importName))))) {
 			return module;
@@ -5466,7 +5466,7 @@ $pyjs.track.module = save_track_module;
 	pyjslib['__dynamic_load__'].__args__ = [null,null,['importName']];
 	pyjslib['BaseException'] = (function(){
 		var $cls_instance = $pyjs__class_instance('BaseException');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '25eff91d0ecc1f4c89e9886c03895e7b';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function() {
@@ -5546,7 +5546,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['Exception'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Exception');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'c998b5e09d5d15515f68940f748474be';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5554,7 +5554,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['StandardError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('StandardError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '55c21e5f50c788ac196de3b795c5057d';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5562,7 +5562,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['AssertionError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('AssertionError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'a898020fcd9e6a6c640abb9deeb209f8';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5570,7 +5570,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['GeneratorExit'] = (function(){
 		var $cls_instance = $pyjs__class_instance('GeneratorExit');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '08a625a6fd6398a42bfa8d2fc7e8698f';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5578,7 +5578,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['TypeError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('TypeError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '7d36d0d91199394efffdbf809e306929';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5586,7 +5586,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['AttributeError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('AttributeError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'd88cb9749c1f293b9c93bcb05b7ada21';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5594,7 +5594,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['NameError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('NameError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '5a760878d0f53553eac5cf16cb6ec80a';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5602,7 +5602,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['ValueError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('ValueError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '09ad8ce541d506ce4608501422468667';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5610,7 +5610,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['ImportError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('ImportError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'fbb6d11cc68deed63322391d40d67789';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5618,7 +5618,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['LookupError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('LookupError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '7481fb74645ee4b96997b514f0c77b71';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5626,7 +5626,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['RuntimeError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('RuntimeError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'f846b9d6403ba791fd325b48204a3109';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5634,7 +5634,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['ArithmeticError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('ArithmeticError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'dd1af7c651254064b2bb8a4129bdb245';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5642,7 +5642,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['KeyError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('KeyError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '673b8c90f7c38a0fe8a30953778d4de8';
 		$method = $pyjs__bind_method($cls_instance, '__str__', function() {
@@ -5667,7 +5667,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['IndexError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('IndexError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'd442f92d44ea81994e785c12aba38fe2';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5675,7 +5675,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['NotImplementedError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('NotImplementedError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '7675ac512acc9a3e09f933cca03c869d';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5683,7 +5683,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['ZeroDivisionError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('ZeroDivisionError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '09bdaefa51cf6b4c03f44b4c48b2064e';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5691,7 +5691,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['OverflowError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('OverflowError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '660cec25db21c96a45e1645d6f550ead';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -5699,7 +5699,7 @@ $pyjs.track.module = save_track_module;
 	})();
 	pyjslib['UndefinedValueError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('UndefinedValueError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'e3da43f0ed88819371f718caf3d95d8f';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -6128,7 +6128,7 @@ if (typeof Array.prototype.indexOf != 'function') {
         }
         return -1;
     };
-};
+}
 
 
 RegExp.prototype.Exec = RegExp.prototype.exec;
@@ -6143,7 +6143,7 @@ pyjslib.abs = Math.abs;
 	pyjslib['init'].__args__ = [null,null];
 	pyjslib['Class'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Class');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'd3d751387f9facc69971e8fcf3b5550e';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(name) {
@@ -6289,7 +6289,7 @@ pyjslib.abs = Math.abs;
 	pyjslib['bool'].__args__ = [null,null,['v']];
 	pyjslib['float'] = (function(){
 		var $cls_instance = $pyjs__class_instance('float');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '5ec6a99338a49ad428da9c8a99683233';
 		$cls_definition['__number__'] = 0x01;
@@ -6801,9 +6801,9 @@ Number.prototype.__pow__ = function (y, z) {
             37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37,
             37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37
     ];
-    var $log_base_PyLong_BASE = new Array();
-    var $convwidth_base = new Array();
-    var $convmultmax_base = new Array();
+    var $log_base_PyLong_BASE = [];
+    var $convwidth_base = [];
+    var $convmultmax_base = [];
     for (var i = 0; i < 37; i++) {
         $log_base_PyLong_BASE[i] = $convwidth_base[i] = $convmultmax_base[i] = 0;
     }
@@ -6973,7 +6973,7 @@ Number.prototype.__pow__ = function (y, z) {
             if (j / PyLong_SHIFT < size_a || sz < i) {
                 throw pyjslib['OverflowError']("long is too large to format");
             }
-            str = new Array();
+            str = [];
             p = sz;
             if (addL) str[--p] = 'L';
             if ((base & (base - 1)) == 0) {
@@ -7349,7 +7349,7 @@ Number.prototype.__pow__ = function (y, z) {
 
         v = value;
         this.ob_size = 0;
-        this.ob_digit = new Array();
+        this.ob_digit = [];
         if (v.__number__) {
             if (radix) {
                 throw pyjslib.TypeError("long() can't convert non-string with explicit base");
@@ -8424,7 +8424,7 @@ Number.prototype.__pow__ = function (y, z) {
 
 	pyjslib['NotImplementedType'] = (function(){
 		var $cls_instance = $pyjs__class_instance('NotImplementedType');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'b93f29acec3a8ce0f8805c417ccbca1a';
 		$method = $pyjs__bind_method($cls_instance, '__repr__', function() {
@@ -8530,7 +8530,7 @@ $enumerate_array.prototype.$genfunc = $enumerate_array.prototype.next;
 
 	pyjslib['list'] = (function(){
 		var $cls_instance = $pyjs__class_instance('list');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '11756a5ebb52b2663353ac6251f08d02';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(data) {
@@ -9127,7 +9127,7 @@ pyjslib.list.__str__ = pyjslib.list.__repr__;
 pyjslib.list.toString = pyjslib.list.__str__;
 	pyjslib['tuple'] = (function(){
 		var $cls_instance = $pyjs__class_instance('tuple');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '6166800714a1e9b2dc755989e7a357ff';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(data) {
@@ -9409,7 +9409,7 @@ pyjslib.tuple.__str__ = pyjslib.tuple.__repr__;
 pyjslib.tuple.toString = pyjslib.tuple.__str__;
 	pyjslib['dict'] = (function(){
 		var $cls_instance = $pyjs__class_instance('dict');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '09216d9ab1a507bfa73a7f671050a6f2';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(seq) {
@@ -9633,8 +9633,8 @@ pyjslib.tuple.toString = pyjslib.tuple.__str__;
 				throw (pyjslib['TypeError'](String('dict.__cmp__(x,y) requires y to be a \x27dict\x27')));
 			}
 
-        var self_sKeys = new Array(),
-            other_sKeys = new Array(),
+        var self_sKeys = [],
+            other_sKeys = [],
             selfLen = 0,
             otherLen = 0,
             selfObj = self.__object;
@@ -9799,7 +9799,7 @@ pyjslib.tuple.toString = pyjslib.tuple.__str__;
 			}
 
 
-        var keys = new Array();
+        var keys = [];
         var i = 0;
         for (var key in self.__object) {
             keys[i++] = self.__object[key][0];
@@ -9817,7 +9817,7 @@ pyjslib.tuple.toString = pyjslib.tuple.__str__;
 			}
 
 
-        var keys = new Array();
+        var keys = [];
         var i = 0;
         for (var key in self.__object) {
             keys[i++] = self.__object[key][0];
@@ -10073,7 +10073,7 @@ pyjslib.tuple.toString = pyjslib.tuple.__str__;
 				return pyjslib['sprintf'](String('\x3Ctype \x27%s\x27\x3E'), self['__name__']);
 			}
 
-        var keys = new Array();
+        var keys = [];
         for (var key in self.__object)
             keys.push(key);
 
@@ -10126,7 +10126,7 @@ pyjslib.dict.__str__ = pyjslib.dict.__repr__;
 	pyjslib['__empty_dict'].__args__ = [null,null];
 	pyjslib['set'] = (function(){
 		var $cls_instance = $pyjs__class_instance('set');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '6a4e21b76922e34bd872d7333a49e5db';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(data) {
@@ -10257,7 +10257,7 @@ pyjslib.dict.__str__ = pyjslib.dict.__repr__;
 
 			if (pyjslib['bool'](pyjslib['op_eq'](pyjslib.isSet(value), 1))) {
 
-            var hashes = new Array(), obj = self.__object, i = 0;
+            var hashes = [], obj = self.__object, i = 0;
             for (var v in obj) {
                 hashes[i++] = v;
             }
@@ -10290,7 +10290,7 @@ return typeof self.__object[pyjslib.hash(value)] != 'undefined';
 			}
 
 
-        var items = new Array();
+        var items = [];
         var i = 0;
         for (var key in self.__object) {
             items[i++] = self.__object[key];
@@ -10326,7 +10326,7 @@ return typeof self.__object[pyjslib.hash(value)] != 'undefined';
 				return pyjslib['sprintf'](String('\x3Ctype \x27%s\x27\x3E'), self['__name__']);
 			}
 
-        var values = new Array();
+        var values = [];
         var i = 0,
             obj = self.__object,
             s = self.__name__ + "([";
@@ -10704,7 +10704,7 @@ delete self.__object[pyjslib.hash(value)];
 				other = pyjslib['frozenset'](other);
 			}
 
-        var obj = new Object(),
+        var obj = {},
             selfObj = self.__object,
             otherObj = other.__object;
         for (var sVal in selfObj) {
@@ -10783,7 +10783,7 @@ pyjslib['set']['__str__'] = pyjslib['set']['__repr__'];
 pyjslib['set']['toString'] = pyjslib['set']['__repr__'];
 	pyjslib['frozenset'] = (function(){
 		var $cls_instance = $pyjs__class_instance('frozenset');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '82fd137ed45ad19269353949e676aa59';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(data) {
@@ -10917,7 +10917,7 @@ pyjslib['set']['toString'] = pyjslib['set']['__repr__'];
 
 			if (pyjslib['bool'](pyjslib['op_eq'](pyjslib.isSet(value), 1))) {
 
-            var hashes = new Array(), obj = self.__object, i = 0;
+            var hashes = [], obj = self.__object, i = 0;
             for (var v in obj) {
                 hashes[i++] = v;
             }
@@ -10938,7 +10938,7 @@ return typeof self.__object[pyjslib.hash(value)] != 'undefined';
 			}
 
 
-        var hashes = new Array(), obj = self.__object, i = 0;
+        var hashes = [], obj = self.__object, i = 0;
         for (var v in obj) {
             hashes[i++] = v;
         }
@@ -10956,7 +10956,7 @@ return typeof self.__object[pyjslib.hash(value)] != 'undefined';
 			}
 
 
-        var items = new Array();
+        var items = [];
         var i = 0;
         for (var key in self.__object) {
             items[i++] = self.__object[key];
@@ -10992,7 +10992,7 @@ return typeof self.__object[pyjslib.hash(value)] != 'undefined';
 				return pyjslib['sprintf'](String('\x3Ctype \x27%s\x27\x3E'), self['__name__']);
 			}
 
-        var values = new Array();
+        var values = [];
         var i = 0,
             obj = self.__object,
             s = self.__name__ + "([";
@@ -11294,7 +11294,7 @@ pyjslib['frozenset']['__str__'] = pyjslib['frozenset']['__repr__'];
 pyjslib['frozenset']['toString'] = pyjslib['frozenset']['__repr__'];
 	pyjslib['property'] = (function(){
 		var $cls_instance = $pyjs__class_instance('property');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '3f85b6677b23102aa4009d1999eb1715';
 		$method = $pyjs__bind_method($cls_instance, '__init__', function(fget, fset, fdel, doc) {
@@ -11473,7 +11473,7 @@ pyjslib['frozenset']['toString'] = pyjslib['frozenset']['__repr__'];
     if (object_or_type.__is_instance__ === false) {
         return fn;
     }
-    var obj = new Object();
+    var obj = {};
     function wrapper(obj, name) {
         var fnwrap = function() {
             return obj[name].apply(object_or_type,$pyjs_array_slice.call(arguments));
@@ -11588,7 +11588,7 @@ pyjslib['frozenset']['toString'] = pyjslib['frozenset']['__repr__'];
 		if (pyjslib['bool'](!pyjslib['bool'](step !== null && step.__number__ && (step.__number__ != 0x01 || isFinite(step))))) {
 			throw (pyjslib['TypeError'](pyjslib['sprintf'](String('xrange() integer step argument expected, got %s'), step['__class__']['__name__'])));
 		}
-		items = new Array();
+		items = [];
 
     var nstep = (stop-start)/step;
     nstep = nstep < 0 ? Math.ceil(nstep) : Math.floor(nstep);
@@ -12242,7 +12242,7 @@ throw pyjslib.TypeError("ord() expected string of length 1");
 	pyjslib['reduce'].__name__ = 'reduce';
 
 	pyjslib['reduce'].__bind_type__ = 0;
-	pyjslib['reduce'].__args__ = [null,null,['func'],['iterable'],['initializer', (function(){return;})()]];
+	pyjslib['reduce'].__args__ = [null,null,['func'],['iterable'],['initializer', (function(){})()]];
 	pyjslib['zip'] = function() {
 		var iterables = pyjslib['tuple']($pyjs_array_slice.call(arguments,0,arguments.length));
 
@@ -12464,7 +12464,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 			if ($generator_state[0] == 4) {
 			}
 
-			return;
+
 		};
 		return $generator;
 	};
@@ -12623,7 +12623,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 			if ($generator_state[0] == 4) {
 			}
 
-			return;
+
 		};
 		return $generator;
 	};
@@ -12820,7 +12820,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 			if ($generator_state[0] == 3) {
 			}
 
-			return;
+
 		};
 		return $generator;
 	};
@@ -12957,7 +12957,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 			if ($generator_state[0] == 4) {
 			}
 
-			return;
+
 		};
 		return $generator;
 	};
@@ -13864,7 +13864,7 @@ $pyjs.loaded_modules['binascii'] = function (__mod_name__) {
 
 	binascii['Error'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Error');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '77827d72b0d04e97fb923fc2d26684c0';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -13872,7 +13872,7 @@ $pyjs.loaded_modules['binascii'] = function (__mod_name__) {
 	})();
 	binascii['Done'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Done');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '348359ce1bd92fc817a27c63c160b201';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -13880,7 +13880,7 @@ $pyjs.loaded_modules['binascii'] = function (__mod_name__) {
 	})();
 	binascii['Incomplete'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Incomplete');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = '2fdf0598d2c4d52a0bf02c7de676e463';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -14743,31 +14743,31 @@ return $listcomp4;}();
 			}
 			else {
 				if (pyjslib['bool'](pyjslib['op_eq'](count, 1))) {
-					if (pyjslib['bool'](!pyjslib['op_eq'](prev, String('')))) {
+					if (pyjslib['bool'](!pyjslib['op_eq'](prev, String('ï¿½')))) {
 						result['append'](prev);
 					}
 					else {
-						result['extend'](pyjslib['list']([String(''), String('\x00')]));
+						result['extend'](pyjslib['list']([String('ï¿½'), String('\x00')]));
 					}
 				}
 				else if (pyjslib['bool']((pyjslib['cmp'](count, 4) == -1))) {
-					if (pyjslib['bool'](!pyjslib['op_eq'](prev, String('')))) {
+					if (pyjslib['bool'](!pyjslib['op_eq'](prev, String('ï¿½')))) {
 						result['extend']((typeof ($mul5=pyjslib['list']([prev]))==typeof ($mul6=count) && typeof $mul5=='number'?
 							$mul5*$mul6:
 							pyjslib['op_mul']($mul5,$mul6)));
 					}
 					else {
-						result['extend']((typeof ($mul7=pyjslib['list']([String(''), String('\x00')]))==typeof ($mul8=count) && typeof $mul7=='number'?
+						result['extend']((typeof ($mul7=pyjslib['list']([String('ï¿½'), String('\x00')]))==typeof ($mul8=count) && typeof $mul7=='number'?
 							$mul7*$mul8:
 							pyjslib['op_mul']($mul7,$mul8)));
 					}
 				}
 				else {
-					if (pyjslib['bool'](!pyjslib['op_eq'](prev, String('')))) {
-						result['extend'](pyjslib['list']([prev, String(''), pyjslib['chr'](count)]));
+					if (pyjslib['bool'](!pyjslib['op_eq'](prev, String('ï¿½')))) {
+						result['extend'](pyjslib['list']([prev, String('ï¿½'), pyjslib['chr'](count)]));
 					}
 					else {
-						result['extend'](pyjslib['list']([String(''), String('\x00'), String(''), pyjslib['chr'](count)]));
+						result['extend'](pyjslib['list']([String('ï¿½'), String('\x00'), String('ï¿½'), pyjslib['chr'](count)]));
 					}
 				}
 				count = 1;
@@ -14782,7 +14782,7 @@ return $listcomp4;}();
 	binascii['rlecode_hqx'].__args__ = [null,null,['s']];
 	binascii['rledecode_hqx'] = function(s) {
 		var count,$iter14_array,$iter14_type,$sub27,$mul10,$mul9,$sub28,snippet,result,$iter14_iter,prev,$iter14_idx,$iter14_nextval;
-		s = s['$$split'](String(''));
+		s = s['$$split'](String('ï¿½'));
 		result = pyjslib['list']([s.__getitem__(0)]);
 		prev = s.__getitem__(0);
 		$iter14_iter = pyjslib['slice'](s, 1, null);
@@ -14807,8 +14807,8 @@ return $listcomp4;}();
 				prev = snippet;
 			}
 			else {
-				result['append'](String(''));
-				prev = String('');
+				result['append'](String('ï¿½'));
+				prev = String('ï¿½');
 			}
 			result['append'](pyjslib['slice'](snippet, 1, null));
 		}
@@ -15230,7 +15230,7 @@ $pyjs.loaded_modules['random'] = function (__mod_name__) {
 	random['_random'] = pyjslib['___import___']('_random', null);
 	random['Random'] = (function(){
 		var $cls_instance = $pyjs__class_instance('Random');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'f05cc23fd23f97d927dd097a41165220';
 		$cls_definition['VERSION'] = 3;
@@ -15454,7 +15454,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 						if ($generator_state[0] == 4) {
 						}
 
-							return;
+
 						};
 						return $generator;
 					}()
@@ -16429,7 +16429,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 	})();
 	random['WichmannHill'] = (function(){
 		var $cls_instance = $pyjs__class_instance('WichmannHill');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'd17ca890bd5ad34bde7b9db661c19da2';
 		$cls_definition['VERSION'] = 1;
@@ -16694,7 +16694,7 @@ var $generator_state = [0], $generator_exc = [null], $yield_value = null, $exc =
 	})();
 	random['SystemRandom'] = (function(){
 		var $cls_instance = $pyjs__class_instance('SystemRandom');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'ee10c7c61b32a718ca9b1371f21d310d';
 		$method = $pyjs__bind_method($cls_instance, 'random', function() {
@@ -16989,10 +16989,10 @@ $pyjs.loaded_modules['dynamic'] = function (__mod_name__) {
 
 	dynamic['DOM'] = pyjslib['___import___']('pyjamas.DOM', null, null, false);
 	dynamic['sys'] = pyjslib['___import___']('sys', null);
-	;
+
 	dynamic['AjaxError'] = (function(){
 		var $cls_instance = $pyjs__class_instance('AjaxError');
-		var $cls_definition = new Object();
+		var $cls_definition = {};
 		var $method;
 		$cls_definition.__md5__ = 'e470508acbf89106acbe59a43e68272f';
 		return $pyjs__class_function($cls_instance, $cls_definition, 
@@ -17025,7 +17025,7 @@ $pyjs.loaded_modules['dynamic'] = function (__mod_name__) {
 		if (typeof on_load_fn == 'undefined') on_load_fn=arguments.callee.__args__[4][1];
 		if (typeof async == 'undefined') async=arguments.callee.__args__[5][1];
 		var $or5,$attr20,req,$pyjs_try_err,$attr9,$or4,$or6,$or3,$and3,$and4,$attr19,$attr18,$attr15,$attr14,$attr17,$attr16,$attr11,$attr10,$attr13,$attr12,err,$add2,$add1;
-		;
+
 		$wnd.status = (typeof ($add1=String('Loading '))==typeof ($add2=url) && (typeof $add1=='number'||typeof $add1=='string')?
 			$add1+$add2:
 			pyjslib['op_add']($add1,$add2));
@@ -17206,7 +17206,7 @@ namespace[k] = v;
 	dynamic['eval'].__args__ = [null,null,['str']];
 	dynamic['ajax_eval'] = function(url, on_load_fn, async) {
 		var onready;
-		;
+
 		onready = function(evnt, req) {
 			var str,$attr25,$attr26;
 			str = ((($attr25=req['responseText']) !== null & ($attr26=req).__is_instance__) && typeof $attr25 == 'function'?
@@ -17234,7 +17234,7 @@ namespace[k] = v;
 		if (typeof namespace == 'undefined') namespace=arguments.callee.__args__[3][1];
 		if (typeof names == 'undefined') names=arguments.callee.__args__[4][1];
 		var e,name,err,script,$iter4_nextval,req,module,$iter4_idx,$attr28,name_getter,$pyjs_try_err,$iter4_type,$attr27,$iter4_array,$attr29,$attr30,$iter4_iter;
-		;
+
 		if (pyjslib['bool'](dynamic['__imported__']['has_key'](url))) {
 			module = dynamic['__imported__'].__getitem__(url);
 		}
@@ -17944,7 +17944,7 @@ $pyjs.__last_exception__ = null;
 sys.save_exception_stack = function () {
     var save_stack = [];
     for (var needle in $pyjs.trackstack) {
-        var t = new Object();
+        var t = {};
         for (var p in $pyjs.trackstack[needle]) {
             t[p] = $pyjs.trackstack[needle][p];
         }
@@ -18034,7 +18034,7 @@ function app_imported() {
                'KYOA',
                null,
                '__main__');
-    return;
+
 }
 
 function prepare_app() {

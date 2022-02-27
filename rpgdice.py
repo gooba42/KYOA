@@ -5,33 +5,36 @@ class gameDie:
     """Standard gaming dice implemented as a python class"""
 
     def __init__(self, variety=6):
-        "Set the type of die, otherwise not much..."
+        """Set the type of die, otherwise not much..."""
         self.variety = variety
+
     # end def __init__
 
     def __call__(self):
-        "Called without argument will just roll a single die"
+        """Called without argument will just roll a single die"""
         return self.roll()
 
     def roll(self):
-        "Roll a single die of the previously defined type"
+        """Roll a single die of the previously defined type"""
         result = random.randint(1, self.variety)
         return result
+
     # end def roll
 
     def multiple_roll(self, multiplier, modifier=0):
-        "Roll multiple dice with a multiplier"
+        """Roll multiple dice with a multiplier"""
         total = 0
         for item in range(multiplier):
             total += self.roll()
         # end for
         total += modifier
         return total
+
     # end def multiple_roll
 
     def drop_roll(self, multiplier, drop):
-        "A dropped roll type roll, i.e. 5d6 drop 2"
-        if(multiplier <= drop):
+        """A dropped roll type roll, i.e. 5d6 drop 2"""
+        if multiplier <= drop:
             print("You can't drop more dice than you roll.")
             return 1
         total = 0

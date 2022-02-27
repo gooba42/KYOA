@@ -18,7 +18,7 @@ print(conflict['description'])
 perform = input("Will you do it? (Y or N) ")
 if re.match("[Yy]", perform):
     roll = myHero.skills[myHero.best]()
-    if(roll > 2):
+    if roll > 2:
         print(myHero.name + " did it!")
     else:
         print(myHero.name + " rolled a " + str(roll) + " and had a problem.")

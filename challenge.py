@@ -8,12 +8,10 @@ class challenge:
     def __init__(self, level, type, flavorText):
         self.level = level
         self.type = type
-        self.description = {}
-        self.description['Description'] = flavorText
-        self.description['Success'] = "You've pulled it off and succeeded at "+self.type+"!"
-        self.description['Failure'] = "You've failed at "+type+"."
-        self.description['Declined'] = "You've refused to perform "+type+"."
-
+        self.description = {'Description': flavorText,
+                            'Success': "You've pulled it off and succeeded at " + self.type + "!",
+                            'Failure': "You've failed at " + type + ".",
+                            'Declined': "You've refused to perform " + type + "."}
 
     def __call__(self):
         return self.description["Description"]
@@ -25,7 +23,7 @@ class challenge:
         return self.description["Failure"]
 
     def accepted(self, roll):
-        if(roll > self.level):
+        if roll > self.level:
             return self.success()
         else:
             return self.failure()
