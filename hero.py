@@ -2,24 +2,25 @@
 from rpgdice import gameDie
 
 
-class hero:
+class Hero:
     """This creates a hero suitable for a kid fantasy game.
     They have 3 skills: Best, Second Best and Worst
     These are represented by different gaming dice with higher
     skills represented by dice with more sides for greater chance
     of a higher-than-threshold roll."""
 
-    def __init__(self, name, best, middling, worst, level=0):
+    def __init__(self, name: str = "", best: str = "", middling: str = "", worst: str = "", level: int = 0):
+
         self.skills = None
-        self.name = name
-        self.best = best
-        self.middling = middling
-        self.worst = worst
+        self.name = name.title()
+        self.best = best.title()
+        self.middling = middling.title()
+        self.worst = worst.title()
         self.bestDie = gameDie(1)
         self.mDie = gameDie(1)
         self.wDie = gameDie(1)
         self.level = level
-        self.setLevel(level)
+        self.set_level(level)
         self.updateSkills()
 
     def __call__(self):
@@ -29,10 +30,10 @@ class hero:
         ]
         return stats
 
-    def setLevel(self, newLevel):
+    def set_level(self, new_level):
         """This should update the dice according to the new level applied to
         the hero."""
-        self.level = newLevel
+        self.level = new_level
         if self.level == 0:
             # Regular Person Stats
             self.setDice(8, 6, 4)
@@ -68,3 +69,16 @@ class hero:
             self.middling: self.mDie,
             self.worst: self.wDie
         }
+
+    def setName(self, Name="Bozo"):
+        self.name = Name.title()
+
+    def setSkill(self, name="Tax Accounting", tier="worst"):
+        Tier = tier.lower()
+        Name = name.title()
+        if (Tier == "best"):
+            self.best = Name
+        elif (Tier == "middling"):
+            self.middling = Name
+        else:
+            self.worst = Name

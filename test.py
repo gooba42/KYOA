@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import re
 
-from hero import hero
+from hero import Hero
 
 # from random import shuffle
 
@@ -11,7 +11,7 @@ heroBest = input("What is your hero's best skill? ") or "Clowning"
 heroMid = input("What is your hero's second best skill? ") or "Juggling"
 heroWorst = input("What is your hero's worst skill? ") or "Tax Accounting"
 heroLevel = 0
-myHero = hero(heroName, heroBest, heroMid, heroWorst, heroLevel)
+myHero = Hero(heroName, heroBest, heroMid, heroWorst, heroLevel)
 conflict = {'description': 'An old man demand you perform ' + myHero.best + "."}
 
 print(conflict['description'])

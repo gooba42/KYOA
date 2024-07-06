@@ -1,22 +1,24 @@
 #!/usr/bin/python3
 import re
 from random import choice
-from hero import hero
-from challenge import challenge
 
-heroName = input("What is your hero's name? ") or "Bozo"
-heroBest = input("What is your hero's best skill? ") or "Clowning"
-heroMid = input("What is your hero's second best skill? ") or "Juggling"
-heroWorst = input("What is your hero's worst skill? ") or "Tax Accounting"
-heroLevel = 0
-myHero = hero(heroName, heroBest, heroMid, heroWorst, heroLevel)
+from challenge import Challenge
+from hero import Hero
+
+myHero = Hero();
+myHero.setName(input("What is your hero's name? ") or "Bozo")
+myHero.setSkill(input("What is your hero's best skill? ") or "Clowning", "BEST")
+myHero.setSkill(input("What is your hero's second best skill? ") or "Juggling", "MIDDLING")
+myHero.setSkill(input("What is your hero's worst skill? ") or "Tax Accounting", "WORST")
+myHero.setLevel(0)
+
 while True:
     issue = choice([myHero.best, myHero.middling, myHero.worst])
     conflict = 'An old man demands you perform ' + issue + "."
-    test = challenge(1, issue, conflict)
-    test.description['Declined'] = "Oh fartnuggets!"
+    test = Challenge(1, issue, conflict)
+    test.Description['Declined'] = "Oh fartnuggets!"
 
-    print(test.description['Description'])
+    print(test.Description['Description'])
     perform = input("Will you do it? (Y or N) ")
     if re.match("[Yy]", perform):
         roll = myHero.skills[issue]()
